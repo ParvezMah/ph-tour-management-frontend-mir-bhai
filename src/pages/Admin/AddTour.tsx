@@ -43,10 +43,10 @@ import {
 import { IErrorResponse } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format, formatISO } from "date-fns";
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
 
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";
 
@@ -59,7 +59,7 @@ const formSchema = z.object({
   endDate: z.date({ message: "End date is required" }),
   // departureLocation: z.string().min(1, "Departure location is required"),
   // arrivalLocation: z.string().min(1, "Arrival location is required"),
-  // included: z.array(z.object({ value: z.string() })),
+  included: z.array(z.object({ value: z.string() })),
   // excluded: z.array(z.object({ value: z.string() })),
   // amenities: z.array(z.object({ value: z.string() })),
   // tourPlan: z.array(z.object({ value: z.string() })),
@@ -104,12 +104,12 @@ export default function AddTour() {
       endDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), // 3 days later
       // departureLocation: "Dhaka",
       // arrivalLocation: "Cox's Bazar",
-      // included: [
-      //   { value: "Accommodation for 2 nights" },
-      //   { value: "All meals (breakfast, lunch, dinner)" },
-      //   { value: "Transportation (AC bus)" },
-      //   { value: "Professional tour guide" },
-      // ],
+      included: [
+        { value: "Accommodation for 2 nights" },
+        { value: "All meals (breakfast, lunch, dinner)" },
+        { value: "Transportation (AC bus)" },
+        { value: "Professional tour guide" },
+      ],
       // excluded: [
       //   { value: "Personal expenses" },
       //   { value: "Extra activities not mentioned" },
@@ -133,14 +133,14 @@ export default function AddTour() {
     },
   });
 
-  // const {
-  //   fields: includedFields,
-  //   append: appendIncluded,
-  //   remove: removeIncluded,
-  // } = useFieldArray({
-  //   control: form.control,
-  //   name: "included",
-  // });
+  const {
+    fields: includedFields,
+    append: appendIncluded,
+    remove: removeIncluded,
+  } = useFieldArray({
+    control: form.control,
+    name: "included",
+  });
 
   // const {
   //   fields: excludedFields,
@@ -207,22 +207,22 @@ export default function AddTour() {
     formData.append("data", JSON.stringify(tourData));
     images.forEach((image) => formData.append("files", image as File));
 
-    try {
-      const res = await addTour(formData).unwrap();
+    // try {
+    //   const res = await addTour(formData).unwrap();
 
-      if (res.success) {
-        console.log(res)
-        toast.success("Tour created", { id: toastId });
-        form.reset();
-      } else {
-        toast.error("Something went wrong", { id: toastId });
-      }
-    } catch (err: unknown) {
-      console.error(err);
-      toast.error((err as IErrorResponse).message || "Something went wrong", {
-        id: toastId,
-      });
-    }
+    //   if (res.success) {
+    //     console.log(res)
+    //     toast.success("Tour created", { id: toastId });
+    //     form.reset();
+    //   } else {
+    //     toast.error("Something went wrong", { id: toastId });
+    //   }
+    // } catch (err: unknown) {
+    //   console.error(err);
+    //   toast.error((err as IErrorResponse).message || "Something went wrong", {
+    //     id: toastId,
+    //   });
+    // }
   };
 
   return (
@@ -522,7 +522,7 @@ export default function AddTour() {
               <div className="border-t border-muted w-full "></div>
 
               {/* Included */}
-              {/* <div>
+               <div>
                 <div className="flex justify-between">
                   <p className="font-semibold">Included</p>
                   <Button
@@ -535,6 +535,7 @@ export default function AddTour() {
                   </Button>
                 </div>
 
+                  
                 <div className="space-y-4 mt-4">
                   {includedFields.map((item, index) => (
                     <div className="flex gap-2" key={item.id}>
@@ -562,7 +563,7 @@ export default function AddTour() {
                     </div>
                   ))}
                 </div>
-              </div> */}
+              </div>
 
 
               {/* Excluded */}
