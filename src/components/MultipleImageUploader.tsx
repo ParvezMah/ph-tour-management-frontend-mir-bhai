@@ -1,20 +1,19 @@
-import { AlertCircleIcon, ImageIcon, UploadIcon, XIcon } from "lucide-react"
+import { AlertCircleIcon, ImageIcon, UploadIcon, XIcon } from "lucide-react";
 
-import { FileMetadata, useFileUpload } from "@/hooks/use-file-upload"
-import { Button } from "@/components/ui/button"
+import { FileMetadata, useFileUpload } from "@/hooks/use-file-upload";
+import { Button } from "@/components/ui/button";
 import { Dispatch, useEffect } from "react";
 
 // Create some dummy initial files
-
 
 export default function MultipleImageUploader({
   onChange,
 }: {
   onChange: Dispatch<React.SetStateAction<[] | (File | FileMetadata)[]>>;
 }) {
-  const maxSizeMB = 5
-  const maxSize = maxSizeMB * 1024 * 1024 // 5MB default
-  const maxFiles = 3
+  const maxSizeMB = 5;
+  const maxSize = maxSizeMB * 1024 * 1024; // 5MB default
+  const maxFiles = 3;
 
   const [
     { files, isDragging, errors },
@@ -32,7 +31,7 @@ export default function MultipleImageUploader({
     maxSize,
     multiple: true,
     maxFiles,
-  })
+  });
 
   useEffect(() => {
     if (files.length > 0) {
@@ -42,8 +41,6 @@ export default function MultipleImageUploader({
       onChange([]);
     }
   }, [files]);
-
-
 
   return (
     <div className="flex flex-col gap-2">
@@ -69,6 +66,7 @@ export default function MultipleImageUploader({
                 Uploaded Files ({files.length})
               </h3>
               <Button
+                type="button"
                 variant="outline"
                 size="sm"
                 onClick={openFileDialog}
@@ -94,6 +92,7 @@ export default function MultipleImageUploader({
                     className="size-full rounded-[inherit] object-cover"
                   />
                   <Button
+                    type="button"
                     onClick={() => removeFile(file.id)}
                     size="icon"
                     className="absolute -top-2 -right-2 size-6 rounded-full border-2 border-background shadow-none focus-visible:border-background"
@@ -117,7 +116,7 @@ export default function MultipleImageUploader({
             <p className="text-xs text-muted-foreground">
               SVG, PNG, JPG or GIF (max. {maxSizeMB}MB)
             </p>
-            <Button variant="outline" className="mt-4" onClick={openFileDialog}>
+            <Button type="button" variant="outline" className="mt-4" onClick={openFileDialog}>
               <UploadIcon className="-ms-1 opacity-60" aria-hidden="true" />
               Select images
             </Button>
@@ -135,5 +134,5 @@ export default function MultipleImageUploader({
         </div>
       )}
     </div>
-  )
+  );
 }

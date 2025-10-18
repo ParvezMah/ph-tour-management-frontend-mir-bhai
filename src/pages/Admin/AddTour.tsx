@@ -43,10 +43,10 @@ import {
 import { IErrorResponse } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format, formatISO } from "date-fns";
-import { CalendarIcon, Plus, Trash2 } from "lucide-react";
+import { CalendarIcon } from "lucide-react";
 import { useState } from "react";
 
-import { useFieldArray, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";
 
@@ -57,14 +57,14 @@ const formSchema = z.object({
   costFrom: z.string().min(1, "Cost is required"),
   startDate: z.date({ message: "Start date is required" }),
   endDate: z.date({ message: "End date is required" }),
-  departureLocation: z.string().min(1, "Departure location is required"),
-  arrivalLocation: z.string().min(1, "Arrival location is required"),
-  included: z.array(z.object({ value: z.string() })),
-  excluded: z.array(z.object({ value: z.string() })),
-  amenities: z.array(z.object({ value: z.string() })),
-  tourPlan: z.array(z.object({ value: z.string() })),
-  maxGuest: z.string().min(1, "Max guest is required"),
-  minAge: z.string().min(1, "Minimum age is required"),
+  // departureLocation: z.string().min(1, "Departure location is required"),
+  // arrivalLocation: z.string().min(1, "Arrival location is required"),
+  // included: z.array(z.object({ value: z.string() })),
+  // excluded: z.array(z.object({ value: z.string() })),
+  // amenities: z.array(z.object({ value: z.string() })),
+  // tourPlan: z.array(z.object({ value: z.string() })),
+  // maxGuest: z.string().min(1, "Max guest is required"),
+  // minAge: z.string().min(1, "Minimum age is required"),
   division: z.string().min(1, "Division is required"),
   tourType: z.string().min(1, "Tour type is required"),
 });
@@ -102,72 +102,72 @@ export default function AddTour() {
       costFrom: "15000",
       startDate: new Date(),
       endDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), // 3 days later
-      departureLocation: "Dhaka",
-      arrivalLocation: "Cox's Bazar",
-      included: [
-        { value: "Accommodation for 2 nights" },
-        { value: "All meals (breakfast, lunch, dinner)" },
-        { value: "Transportation (AC bus)" },
-        { value: "Professional tour guide" },
-      ],
-      excluded: [
-        { value: "Personal expenses" },
-        { value: "Extra activities not mentioned" },
-        { value: "Travel insurance" },
-      ],
-      amenities: [
-        { value: "Air-conditioned rooms" },
-        { value: "Free WiFi" },
-        { value: "Swimming pool access" },
-        { value: "Beach access" },
-      ],
-      tourPlan: [
-        { value: "Day 1: Arrival and beach exploration" },
-        { value: "Day 2: Himchari National Park visit" },
-        { value: "Day 3: Inani Beach and departure" },
-      ],
-      maxGuest: "25",
-      minAge: "5",
+      // departureLocation: "Dhaka",
+      // arrivalLocation: "Cox's Bazar",
+      // included: [
+      //   { value: "Accommodation for 2 nights" },
+      //   { value: "All meals (breakfast, lunch, dinner)" },
+      //   { value: "Transportation (AC bus)" },
+      //   { value: "Professional tour guide" },
+      // ],
+      // excluded: [
+      //   { value: "Personal expenses" },
+      //   { value: "Extra activities not mentioned" },
+      //   { value: "Travel insurance" },
+      // ],
+      // amenities: [
+      //   { value: "Air-conditioned rooms" },
+      //   { value: "Free WiFi" },
+      //   { value: "Swimming pool access" },
+      //   { value: "Beach access" },
+      // ],
+      // tourPlan: [
+      //   { value: "Day 1: Arrival and beach exploration" },
+      //   { value: "Day 2: Himchari National Park visit" },
+      //   { value: "Day 3: Inani Beach and departure" },
+      // ],
+      // maxGuest: "25",
+      // minAge: "5",
       division: "",
       tourType: "",
     },
   });
 
-  const {
-    fields: includedFields,
-    append: appendIncluded,
-    remove: removeIncluded,
-  } = useFieldArray({
-    control: form.control,
-    name: "included",
-  });
+  // const {
+  //   fields: includedFields,
+  //   append: appendIncluded,
+  //   remove: removeIncluded,
+  // } = useFieldArray({
+  //   control: form.control,
+  //   name: "included",
+  // });
 
-  const {
-    fields: excludedFields,
-    append: appendExcluded,
-    remove: removeExcluded,
-  } = useFieldArray({
-    control: form.control,
-    name: "excluded",
-  });
+  // const {
+  //   fields: excludedFields,
+  //   append: appendExcluded,
+  //   remove: removeExcluded,
+  // } = useFieldArray({
+  //   control: form.control,
+  //   name: "excluded",
+  // });
 
-  const {
-    fields: amenitiesFields,
-    append: appendAmenities,
-    remove: removeAmenities,
-  } = useFieldArray({
-    control: form.control,
-    name: "amenities",
-  });
+  // const {
+  //   fields: amenitiesFields,
+  //   append: appendAmenities,
+  //   remove: removeAmenities,
+  // } = useFieldArray({
+  //   control: form.control,
+  //   name: "amenities",
+  // });
 
-  const {
-    fields: tourPlanFields,
-    append: appendTourPlan,
-    remove: removeTourPlan,
-  } = useFieldArray({
-    control: form.control,
-    name: "tourPlan",
-  });
+  // const {
+  //   fields: tourPlanFields,
+  //   append: appendTourPlan,
+  //   remove: removeTourPlan,
+  // } = useFieldArray({
+  //   control: form.control,
+  //   name: "tourPlan",
+  // });
 
   const handleSubmit = async (data: z.infer<typeof formSchema>) => {
     const toastId = toast.loading("Creating tour....");
@@ -180,8 +180,8 @@ export default function AddTour() {
     const tourData = {
       ...data,
       costFrom: Number(data.costFrom),
-      minAge: Number(data.minAge),
-      maxGuest: Number(data.maxGuest),
+      // minAge: Number(data.minAge),
+      // maxGuest: Number(data.maxGuest),
       startDate: formatISO(data.startDate),
       endDate: formatISO(data.endDate),
       // included:
@@ -211,6 +211,7 @@ export default function AddTour() {
       const res = await addTour(formData).unwrap();
 
       if (res.success) {
+        console.log(res)
         toast.success("Tour created", { id: toastId });
         form.reset();
       } else {
@@ -279,7 +280,9 @@ export default function AddTour() {
                   )}
                 />
               </div>
-              <div className="flex gap-5">
+
+              {/* Departure & Arrival Location */}
+              {/* <div className="flex gap-5">
                 <FormField
                   control={form.control}
                   name="departureLocation"
@@ -306,7 +309,9 @@ export default function AddTour() {
                     </FormItem>
                   )}
                 />
-              </div>
+              </div> */}
+
+
               <div className="flex gap-5">
                 <FormField
                   control={form.control}
@@ -372,7 +377,9 @@ export default function AddTour() {
                   )}
                 />
               </div>
-              <div className="flex gap-5">
+
+              {/* Max Guest & Minimum Age */}
+              {/* <div className="flex gap-5">
                 <FormField
                   control={form.control}
                   name="maxGuest"
@@ -386,6 +393,7 @@ export default function AddTour() {
                     </FormItem>
                   )}
                 />
+
                 <FormField
                   control={form.control}
                   name="minAge"
@@ -399,7 +407,10 @@ export default function AddTour() {
                     </FormItem>
                   )}
                 />
-              </div>
+              </div> */}
+
+
+              {/* Start Date & End Date */}
               <div className="flex gap-5">
                 <FormField
                   control={form.control}
