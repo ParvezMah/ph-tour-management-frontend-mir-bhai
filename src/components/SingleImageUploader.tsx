@@ -23,7 +23,7 @@ export default function SingleImageUploader({onChange}) {
     maxSize,
   })
 
-  console.log("Inside image uploader", files);
+  // console.log("Inside image uploader", files);
 
   useEffect(() => {
     if (files.length > 0) {
@@ -102,20 +102,6 @@ export default function SingleImageUploader({onChange}) {
           <span>{errors[0]}</span>
         </div>
       )}
-
-      <p
-        aria-live="polite"
-        role="region"
-        className="mt-2 text-center text-xs text-muted-foreground"
-      >
-        Single image uploader w/ max size ∙{" "}
-        <a
-          href="https://github.com/cosscom/coss/blob/main/apps/origin/docs/use-file-upload.md"
-          className="underline hover:text-foreground"
-        >
-          API
-        </a>
-      </p>
     </div>
   )
 }
