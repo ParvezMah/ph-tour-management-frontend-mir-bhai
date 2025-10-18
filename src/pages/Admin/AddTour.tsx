@@ -1,3 +1,4 @@
+
 import MultipleImageUploader from "@/components/MultipleImageUploader";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -36,7 +37,7 @@ import { FileMetadata } from "@/hooks/use-file-upload";
 import { cn } from "@/lib/utils";
 import { useGetDivisionsQuery } from "@/redux/features/division/division.api";
 import {
-  useAddTourMutation,
+  useAddTourTypeMutation,
   useGetTourTypesQuery,
 } from "@/redux/features/Tour/tour.api";
 import { IErrorResponse } from "@/types";
@@ -70,11 +71,12 @@ const formSchema = z.object({
 
 export default function AddTour() {
   const [images, setImages] = useState<(File | FileMetadata)[] | []>([]);
+  console.log("images : ", images)
 
   const { data: divisionData, isLoading: divisionLoading } =
     useGetDivisionsQuery(undefined);
   const { data: tourTypeData } = useGetTourTypesQuery(undefined);
-  const [addTour] = useAddTourMutation();
+  const [addTour] = useAddTourTypeMutation();
 
   const divisionOptions = divisionData?.map(
     (item: { _id: string; name: string }) => ({
@@ -182,22 +184,22 @@ export default function AddTour() {
       maxGuest: Number(data.maxGuest),
       startDate: formatISO(data.startDate),
       endDate: formatISO(data.endDate),
-      included:
-        data.included[0].value === ""
-          ? []
-          : data.included.map((item: { value: string }) => item.value),
-      excluded:
-        data.included[0].value === ""
-          ? []
-          : data.excluded.map((item: { value: string }) => item.value),
-      amenities:
-        data.amenities[0].value === ""
-          ? []
-          : data.amenities.map((item: { value: string }) => item.value),
-      tourPlan:
-        data.tourPlan[0].value === ""
-          ? []
-          : data.tourPlan.map((item: { value: string }) => item.value),
+      // included:
+      //   data.included[0].value === ""
+      //     ? []
+      //     : data.included.map((item: { value: string }) => item.value),
+      // excluded:
+      //   data.included[0].value === ""
+      //     ? []
+      //     : data.excluded.map((item: { value: string }) => item.value),
+      // amenities:
+      //   data.amenities[0].value === ""
+      //     ? []
+      //     : data.amenities.map((item: { value: string }) => item.value),
+      // tourPlan:
+      //   data.tourPlan[0].value === ""
+      //     ? []
+      //     : data.tourPlan.map((item: { value: string }) => item.value),
     };
 
     const formData = new FormData();
@@ -507,7 +509,9 @@ export default function AddTour() {
                 </div>
               </div>
               <div className="border-t border-muted w-full "></div>
-              <div>
+
+              {/* Included */}
+              {/* <div>
                 <div className="flex justify-between">
                   <p className="font-semibold">Included</p>
                   <Button
@@ -547,9 +551,11 @@ export default function AddTour() {
                     </div>
                   ))}
                 </div>
-              </div>
+              </div> */}
 
-              <div>
+
+              {/* Excluded */}
+              {/* <div>
                 <div className="flex justify-between">
                   <p className="font-semibold">Excluded</p>
                   <Button
@@ -589,9 +595,11 @@ export default function AddTour() {
                     </div>
                   ))}
                 </div>
-              </div>
+              </div> */}
 
-              <div>
+
+              {/* Amenities */}
+              {/* <div>
                 <div className="flex justify-between">
                   <p className="font-semibold">Amenities</p>
                   <Button
@@ -631,9 +639,10 @@ export default function AddTour() {
                     </div>
                   ))}
                 </div>
-              </div>
+              </div> */}
 
-              <div>
+              {/*  Tour Plan */}
+              {/* <div>
                 <div className="flex justify-between">
                   <p className="font-semibold">Tour Plan</p>
                   <Button
@@ -673,7 +682,10 @@ export default function AddTour() {
                     </div>
                   ))}
                 </div>
-              </div>
+              </div> */}
+
+
+
             </form>
           </Form>
         </CardContent>
