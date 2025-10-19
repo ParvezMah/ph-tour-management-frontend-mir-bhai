@@ -21,7 +21,6 @@ export default function TourDetails() {
     }
   );
 
-  console.log(divisionData);
 
   const tourData = data?.[0];
 

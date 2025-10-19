@@ -10,14 +10,7 @@ export const bookingApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["BOOKING"],
     }),
-    getTourTypes: builder.query({
-      query: () => ({
-        url: "/tour/tour-types",
-        method: "GET",
-      }),
-      providesTags: ["TOUR"],
-      transformResponse: (response) => response.data,
-    }),
+
   }),
 });
 
